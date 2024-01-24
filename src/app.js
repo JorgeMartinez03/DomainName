@@ -6,35 +6,39 @@ import "./assets/img/rigo-baby.jpg";
 import "./assets/img/4geeks.ico";
 
 window.onload = function() {
-  // Datos individuales de los dominios.
+  let pronoun = ["the", "our"];
+  let adj = ["great", "big"];
+  let noun = ["jogger", "racoon"];
+  let end = [".com", ".is"];
 
-  let articles = ["the", "our"];
-  let adjectives = ["great", "big"];
-  let nouns = ["jogger", "racoon"];
-  let tlds = [".com", ".net"];
+  function domaingenerator(pronoun, adj, noun, end) {
+    // Inicializar el resultado como una lista vacía
+    let domains = [];
 
-  let domainNames = [];
-
-  for (let article of articles) {
-    for (let adjective of adjectives) {
-      for (let noun of nouns) {
-        for (let tld of tlds) {
-          domainNames.push(`${article}${adjective}${noun}${tld}`);
+    for (let i = 0; i < pronoun.length; i++) {
+      for (let x = 0; x < adj.length; x++) {
+        for (let y = 0; y < noun.length; y++) {
+          for (let z = 0; z < end.length; z++) {
+            // Crear el dominio y agregarlo a la lista
+            let domain = pronoun[i] + adj[x] + noun[y] + end[z];
+            domains.push(domain);
+          }
         }
       }
     }
+
+    // Devolver la lista de dominios
+    return domains;
   }
 
-  const generateButton = document.querySelector("#generate");
-  const domainContainer = document.querySelector("#domain");
+  // Llamar a la función y almacenar el resultado en la variable result
+  let result = domaingenerator(pronoun, adj, noun, end);
 
-  generateButton.onclick = () => {
-    domainContainer.innerHTML = "<h1>Generated Domains:</h1>";
+  // Imprimir los resultados en la consola
+  console.log(result);
 
-    domainNames.forEach(domain => {
-      const domainElement = document.createElement("p");
-      domainElement.textContent = domain;
-      domainContainer.appendChild(domainElement);
-    });
-  };
+  // Mostrar los resultados en el HTML
+  document.getElementById("domainResult").innerHTML = result
+    .map(domain => '<li class="list-group-item">' + domain + "</li> ")
+    .join("");
 };
